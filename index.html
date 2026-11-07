@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#080b11">
 <title>FX 全真 · 外汇教学模拟盘</title>
-<link rel="stylesheet" href="style.css?v=1794063476">
+<link rel="stylesheet" href="style.css?v=1794063663">
 </head>
 <body>
 
@@ -158,10 +158,10 @@
 
     <h2 class="sec-h">练习工具</h2>
     <div class="tools">
-      <button class="tool" data-tool="leverage"><i>⚖️</i><b>杠杆实验室</b><span>同一笔单，杠杆不同差多少</span></button>
-      <button class="tool" data-tool="liq"><i>💥</i><b>爆仓实验室</b><span>亲手把账户打到强平线</span></button>
-      <button class="tool" data-tool="quiz"><i>📝</i><b>随堂测验</b><span>8 题 · 即时讲解</span></button>
-      <button class="tool" data-tool="exam"><i>🎓</i><b>模拟考试</b><span>15 题 · 限时 · 80 分及格</span></button>
+      <button class="tool" data-tool="leverage"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16"/><path d="M7.5 20h9"/><path d="M4 8h16"/><path d="M4 8l-2 4.2a2.6 2.6 0 004.6 0L4.6 8"/><path d="M20 8l-2 4.2a2.6 2.6 0 004.6 0L20.6 8" transform="translate(-0.6 0)"/></svg></i><b>杠杆实验室</b><span>同一笔单，杠杆不同差多少</span></button>
+      <button class="tool" data-tool="liq"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2.5L5 13.5h5.4L10 21.5l8.2-11.4H13z"/></svg></i><b>爆仓实验室</b><span>亲手把账户打到强平线</span></button>
+      <button class="tool" data-tool="quiz"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4.5h11.5a2.5 2.5 0 012.5 2.5v12.5H7.5A2.5 2.5 0 015 17z"/><path d="M9 9h6M9 12.5h4"/></svg></i><b>随堂测验</b><span>8 题 · 即时讲解</span></button>
+      <button class="tool" data-tool="exam"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="5.2"/><path d="M9.2 14.4L8 21.5l4-2.2 4 2.2-1.2-7.1"/></svg></i><b>模拟考试</b><span>15 题 · 限时 · 80 分及格</span></button>
     </div>
 
     <h2 class="sec-h">复盘</h2>
@@ -178,8 +178,8 @@
 <nav class="tabbar" id="tabbar">
   <button class="tab on" data-tab="market"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 17l5-6 4 4 7-8"/><path d="M15 7h5v5"/></svg></i><span>行情</span></button>
   <button class="tab" data-tab="trade"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M12 4v16"/><path d="M7 9l5-5 5 5"/><path d="M7 15l5 5 5-5"/></svg></i><span>交易</span></button>
-  <button class="tab" data-tab="positions"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 10h8M8 14h5"/></svg></i><span>持仓</span><em class="badge" id="posBadge" hidden>0</em></button>
-  <button class="tab" data-tab="learn"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 6.5A2.5 2.5 0 016.5 4H19v16H6.5A2.5 2.5 0 004 22V6.5z"/><path d="M8 8h7M8 12h5"/></svg></i><span>学习</span></button>
+  <button class="tab" data-tab="positions"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2.6"/><path d="M3 10.5h18"/><circle cx="16.6" cy="14.8" r="1.15"/></svg></i><span>持仓</span><em class="badge" id="posBadge" hidden>0</em></button>
+  <button class="tab" data-tab="learn"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 9.2L12 4.5l9.2 4.7-9.2 4.7L2.8 9.2z"/><path d="M6.4 11.3V16c0 1.6 2.5 2.9 5.6 2.9s5.6-1.3 5.6-2.9v-4.7"/></svg></i><span>学习</span></button>
 </nav>
 
 <div class="modal" id="modal">
@@ -197,9 +197,9 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="data.js?v=1794063476"></script>
-<script src="engine.js?v=1794063476"></script>
-<script src="chart.js?v=1794063476"></script>
-<script src="app.js?v=1794063476"></script>
+<script src="data.js?v=1794063663"></script>
+<script src="engine.js?v=1794063663"></script>
+<script src="chart.js?v=1794063663"></script>
+<script src="app.js?v=1794063663"></script>
 </body>
 </html>

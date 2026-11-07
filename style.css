@@ -164,7 +164,7 @@ main{
 .chip.on{color:var(--acc);border-color:rgba(91,140,255,.4);background:rgba(91,140,255,.12)}
 
 .chart-wrap{
-  height:clamp(220px, 38vh, 340px);border-radius:12px;overflow:hidden;
+  height:clamp(240px, calc(100vh - 470px), 380px);border-radius:12px;overflow:hidden;
   background:linear-gradient(180deg,rgba(16,23,32,.9),rgba(9,13,19,.9));
   border:1px solid var(--line);position:relative;
 }
@@ -546,3 +546,8 @@ main{
 /* 按钮内的行情行元素保持左对齐 */
 .row,.row *{text-align:left}
 .row .row-right,.row .row-right *{text-align:right}
+
+/* 练习工具：图标统一为线性 SVG */
+.tool i{display:block;width:26px;height:26px;margin-bottom:6px;border-radius:8px;
+  background:rgba(91,140,255,.10);color:#8fb0ff;line-height:0;padding:4px}
+.tool i svg{width:18px;height:18px;display:block}
