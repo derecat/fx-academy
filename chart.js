@@ -4,6 +4,30 @@ const Chart = (() => {
   let sym = 'EUR/USD', tf = 1, showMA = true, showRSI = false;
   let padL = 6, padR = 52, padT = 8, padB = 18;
 
+  /* 配色统一从 CSS 变量读取，跟随浅色/深色主题 */
+  let CT = null;
+  function theme() {
+    if (CT) return CT;
+    const cs = getComputedStyle(document.documentElement);
+    const g = (n, fb) => (cs.getPropertyValue(n) || '').trim() || fb;
+    CT = {
+      grid:  g('--ch-grid', 'rgba(0,0,0,.06)'),
+      axis:  g('--ch-axis', 'rgba(60,60,67,.6)'),
+      up:    g('--ch-up', '#1a9c62'),
+      dn:    g('--ch-dn', '#d92d3c'),
+      ma1:   g('--ch-ma1', 'rgba(190,130,20,.9)'),
+      ma2:   g('--ch-ma2', 'rgba(40,110,220,.9)'),
+      price: g('--ch-price', '#0a84ff'),
+      tag:   g('--ch-tag', '#ffffff'),
+      dim:   g('--ch-dim', 'rgba(60,60,67,.55)'),
+      rsi:   g('--ch-rsi', '#af52de'),
+      rsiUp: g('--ch-rsi-up', 'rgba(217,45,60,.35)'),
+      rsiDn: g('--ch-rsi-dn', 'rgba(26,156,98,.35)')
+    };
+    return CT;
+  }
+  window.__resetChartTheme = () => { CT = null; };
+
   function attach(canvas) {
     cv = canvas;
     ctx = cv.getContext('2d');
@@ -65,6 +89,7 @@ const Chart = (() => {
   }
 
   function draw() {
+    const T = theme();
     if (!ctx) return;
     syncSize();                    // 视图刚显示时布局尺寸才可用，这里兜底
     if (W < 20 || H < 20) return;
@@ -101,10 +126,10 @@ const Chart = (() => {
     for (let g = 0; g <= gridN; g++) {
       const v = lo + (hi - lo) * g / gridN;
       const yy = Math.round(y(v)) + 0.5;
-      ctx.strokeStyle = 'rgba(255,255,255,.045)';
+      ctx.strokeStyle = T.grid;
       ctx.lineWidth = 1;
       ctx.beginPath(); ctx.moveTo(padL, yy); ctx.lineTo(W - padR + 4, yy); ctx.stroke();
-      ctx.fillStyle = 'rgba(139,151,168,.62)';
+      ctx.fillStyle = T.axis;
       ctx.textAlign = 'left';
       ctx.fillText(inst.digits <= 3 ? v.toFixed(inst.digits) : v.toFixed(inst.digits), W - padR + 7, yy);
     }
@@ -125,15 +150,15 @@ const Chart = (() => {
         });
         ctx.strokeStyle = color; ctx.lineWidth = 1.2; ctx.stroke();
       };
-      drawMA(m5, 'rgba(232,180,74,.75)');
-      drawMA(m20, 'rgba(91,140,255,.75)');
+      drawMA(m5, T.ma1);
+      drawMA(m20, T.ma2);
     }
 
     // K 线
     view.forEach((b, i) => {
       const x = padL + cw * i + cw / 2;
       const up = b.c >= b.o;
-      const col = up ? '#16c784' : '#f2415f';
+      const col = up ? T.up : T.dn;
       ctx.strokeStyle = col;
       ctx.fillStyle = col;
       ctx.lineWidth = 1;
@@ -146,10 +171,10 @@ const Chart = (() => {
       const yo = y(b.o), yc = y(b.c);
       const top = Math.min(yo, yc), hgt = Math.max(1.2, Math.abs(yc - yo));
       if (up) {
-        ctx.fillStyle = 'rgba(22,199,132,.9)';
+        ctx.fillStyle = T.up;
         ctx.fillRect(x - bw / 2, top, bw, hgt);
       } else {
-        ctx.fillStyle = 'rgba(242,65,95,.9)';
+        ctx.fillStyle = T.dn;
         ctx.fillRect(x - bw / 2, top, bw, hgt);
       }
     });
@@ -158,7 +183,7 @@ const Chart = (() => {
     const mid = st.mid;
     const py = Math.max(padT + 1, Math.min(padT + plotH - 1, y(mid)));
     ctx.setLineDash([3, 3]);
-    ctx.strokeStyle = 'rgba(91,140,255,.5)';
+    ctx.strokeStyle = T.price;
     ctx.lineWidth = 1;
     ctx.beginPath(); ctx.moveTo(padL, py); ctx.lineTo(W - padR + 4, py); ctx.stroke();
     ctx.setLineDash([]);
@@ -167,10 +192,10 @@ const Chart = (() => {
     const label = Market.fmt(inst, mid);
     ctx.font = '600 9.5px ui-monospace, Menlo, monospace';
     const tw = ctx.measureText(label).width + 9;
-    ctx.fillStyle = 'rgba(91,140,255,.92)';
+    ctx.fillStyle = T.price;
     roundRect(W - padR + 3, py - 7.5, Math.min(tw, padR - 4), 15, 3.5);
     ctx.fill();
-    ctx.fillStyle = '#fff';
+    ctx.fillStyle = T.tag;
     ctx.textAlign = 'center';
     ctx.fillText(label, W - padR + 3 + Math.min(tw, padR - 4) / 2, py);
 
@@ -178,12 +203,12 @@ const Chart = (() => {
     const lastX = padL + cw * (view.length - 1) + cw / 2;
     ctx.beginPath();
     ctx.arc(lastX, py, 2.2, 0, Math.PI * 2);
-    ctx.fillStyle = st.dir >= 0 ? '#16c784' : '#f2415f';
+    ctx.fillStyle = st.dir >= 0 ? T.up : T.dn;
     ctx.fill();
 
     // 时间轴（按真实时钟刻度）
     ctx.font = '8.5px ui-monospace, Menlo, monospace';
-    ctx.fillStyle = 'rgba(93,105,122,.75)';
+    ctx.fillStyle = T.dim;
     ctx.textAlign = 'center';
     const step = Math.max(1, Math.floor((view.length - 1) / 4));
     for (let i = view.length - 1; i >= 0; i -= step) {
@@ -197,7 +222,7 @@ const Chart = (() => {
     // RSI 副图
     if (showRSI) {
       const top0 = H - padB - rsiH;
-      ctx.strokeStyle = 'rgba(255,255,255,.06)';
+      ctx.strokeStyle = T.grid;
       ctx.beginPath(); ctx.moveTo(padL, top0); ctx.lineTo(W - padR + 4, top0); ctx.stroke();
 
       const r = rsiVals(bars).slice(-count);
@@ -205,7 +230,7 @@ const Chart = (() => {
       // 70/30 线
       [70, 30].forEach(v => {
         ctx.setLineDash([2, 4]);
-        ctx.strokeStyle = v === 70 ? 'rgba(242,65,95,.28)' : 'rgba(22,199,132,.28)';
+        ctx.strokeStyle = v === 70 ? T.rsiUp : T.rsiDn;
         ctx.beginPath(); ctx.moveTo(padL, yR(v)); ctx.lineTo(W - padR + 4, yR(v)); ctx.stroke();
         ctx.setLineDash([]);
       });
@@ -216,9 +241,9 @@ const Chart = (() => {
         const x = padL + cw * i + cw / 2;
         if (!started) { ctx.moveTo(x, yR(v)); started = true; } else ctx.lineTo(x, yR(v));
       });
-      ctx.strokeStyle = 'rgba(196,130,255,.85)';
+      ctx.strokeStyle = T.rsi;
       ctx.lineWidth = 1.3; ctx.stroke();
-      ctx.fillStyle = 'rgba(196,130,255,.8)';
+      ctx.fillStyle = T.rsi;
       ctx.textAlign = 'left';
       ctx.font = '8px ui-monospace, Menlo, monospace';
       ctx.fillText('RSI(14)', padL + 2, top0 + 7);

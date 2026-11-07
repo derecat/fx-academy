@@ -8,27 +8,27 @@
 */
 const INSTRUMENTS = [
   {
-    sym: 'EUR/USD', name: '欧元 / 美元', cls: 'fx', flag: 'EU',
+    sym: 'EUR/USD', name: '欧元 / 美元', cls: 'fx', flag: '€',
     base: 1.08650, digits: 5, pip: 0.0001, contract: 100000,
     spreadPip: 1.0, vol: 0.000022, swapLong: -7.2, swapShort: 2.1, drift: 0
   },
   {
-    sym: 'GBP/USD', name: '英镑 / 美元', cls: 'fx', flag: 'GB',
+    sym: 'GBP/USD', name: '英镑 / 美元', cls: 'fx', flag: '£',
     base: 1.26840, digits: 5, pip: 0.0001, contract: 100000,
     spreadPip: 1.4, vol: 0.000030, swapLong: -9.5, swapShort: 1.4, drift: 0
   },
   {
-    sym: 'USD/JPY', name: '美元 / 日元', cls: 'fx', flag: 'JP',
+    sym: 'USD/JPY', name: '美元 / 日元', cls: 'fx', flag: '¥',
     base: 151.320, digits: 3, pip: 0.01, contract: 100000,
     spreadPip: 1.2, vol: 0.0042, swapLong: 4.8, swapShort: -12.6, drift: 0
   },
   {
-    sym: 'XAU/USD', name: '黄金 / 美元', cls: 'metal', flag: 'AU',
+    sym: 'XAU/USD', name: '黄金 / 美元', cls: 'metal', flag: 'Au',
     base: 2338.60, digits: 2, pip: 0.1, contract: 100,
     spreadPip: 2.4, vol: 0.075, swapLong: -11.3, swapShort: -4.0, drift: 0
   },
   {
-    sym: 'BTC/USD', name: '比特币 / 美元', cls: 'crypto', flag: 'BT',
+    sym: 'BTC/USD', name: '比特币 / 美元', cls: 'crypto', flag: '₿',
     base: 67420.0, digits: 1, pip: 1, contract: 1,
     spreadPip: 45, vol: 7.2, swapLong: -48, swapShort: -18, drift: 0
   }

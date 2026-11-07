@@ -143,7 +143,7 @@ function renderTrade(force) {
   $('#tSym').textContent = i.sym;
   $('#tName').textContent = i.name;
   $('#tPrice').textContent = Market.fmt(i, st.mid);
-  $('#tPrice').className = st.dir > 0 ? 'up' : st.dir < 0 ? 'dn' : '';
+  $('#tPrice').className = '';
 
   const dp = (st.mid - st.dayOpen) / i.pip;
   const chEl = $('#tChg');
@@ -463,10 +463,10 @@ function renderPositions() {
     fill.style.width = w + '%';
     mlTxt.textContent = `保证金比例 ${ml > 9999 ? '>9999' : ml.toFixed(0)}%` + (ml < Account.STOP_OUT ? ' · 爆仓线' : ml < Account.WARN ? ' · 预警' : ' · 安全');
     fill.style.background = ml < Account.STOP_OUT
-      ? 'linear-gradient(90deg,rgba(242,65,95,.55),rgba(242,65,95,.2))'
+      ? 'var(--dn)'
       : ml < Account.WARN
-        ? 'linear-gradient(90deg,rgba(232,180,74,.5),rgba(232,180,74,.18))'
-        : 'linear-gradient(90deg,rgba(22,199,132,.45),rgba(22,199,132,.15))';
+        ? 'var(--orange)'
+        : 'var(--green)';
   }
 
   $$('#posSeg button').forEach(b => b.classList.toggle('on', b.dataset.p === UI.posSeg));
@@ -627,7 +627,7 @@ function renderLearn() {
 
   const p = doneN / LESSONS.length;
   const deg = p * 360;
-  $('#ring').style.background = `conic-gradient(var(--acc) ${deg}deg, rgba(255,255,255,.08) ${deg}deg)`;
+  $('#ring').style.background = `conic-gradient(var(--acc) ${deg}deg, var(--fill3) ${deg}deg)`;
   $('#ringTxt').textContent = Math.round(p * 100) + '%';
 
   const names = ['第一课', '第二课', '第三课', '第四课', '通关'];
